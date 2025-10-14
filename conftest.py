@@ -1,7 +1,7 @@
 import pytest
 from playwright.sync_api import sync_playwright
 
-from pages.mainpage import MainPage
+from ..pages.mainpage import MainPage
 
 
 #import allure
