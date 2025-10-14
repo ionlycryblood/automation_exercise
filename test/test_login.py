@@ -2,13 +2,12 @@ from ..pages.loginpage import LoginPage
 import pytest
 
 error_messages = {
-    1: 'Заполните это поле.',  # email
-    2: 'Адрес электронной почты должен содержать символ "@". В адресе "qwe" отсутствует символ "@".',
-    3: 'Введите часть адреса после символа "@". Адрес "qwe@" неполный.',
-    4: 'Введите часть адреса до символа "@". Адрес "@qwe" неполный.',
-    5: 'Заполните это поле.', #password
+    1: 'Please fill out this field.',  # email
+    2: "Please include an '@' in the email address. '{}' is missing an '@'.",
+    3: "Please enter a part following '@'. '{}' is incomplete.",
+    4: "Please enter a part followed by '@'. '{}' is incomplete.",
+    5: 'Please fill out this field.',  # password
 }
-
 
 @pytest.mark.parametrize(
     "email, password, error_code",
