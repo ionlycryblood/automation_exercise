@@ -9,7 +9,7 @@ from .pages.mainpage import MainPage
 @pytest.fixture()
 def page():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch()
         context = browser.new_context(ignore_https_errors=True)
         page = context.new_page()
         page.on("console", lambda msg: print(">>", msg.text))
