@@ -1,0 +1,35 @@
+name: Python Tests
+
+on: [push, workflow_dispatch]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest-playwright
+        playwright install
+
+    - name: Install Playwright dependencies
+      run: python -m playwright install-deps
+
+    - name: install pw browsers
+      run: python -m playwright install
+
+    - name: run test
+      run: pytest
