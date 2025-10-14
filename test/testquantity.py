@@ -1,4 +1,4 @@
-from pages.cartpage import CartPage
+from ..pages.cartpage import CartPage
 from ..pages.loginpage import LoginPage
 from ..pages.allproductspage import AllProductsPage
 from ..pages.productpage import ProductPage

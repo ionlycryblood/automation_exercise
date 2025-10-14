@@ -1,11 +1,11 @@
-from pages.cartpage import CartPage
-from pages.checkoutpage import CheckoutPage
-from pages.createdaccpage import CreatedAccPage
-from pages.paymentpage import PaymentPage
-from pages.signuppage import SignupPage
-from pages.loginpage import LoginPage
-from pages.allproductspage import AllProductsPage
-from utils.data_generator import random_user
+from ..pages.cartpage import CartPage
+from ..pages.checkoutpage import CheckoutPage
+from ..pages.createdaccpage import CreatedAccPage
+from ..pages.paymentpage import PaymentPage
+from ..pages.signuppage import SignupPage
+from ..pages.loginpage import LoginPage
+from ..pages.allproductspage import (AllProductsPage)
+from ..utils.data_generator import random_user
 
 def test_searching(page, load):
     user = random_user()

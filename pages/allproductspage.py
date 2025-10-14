@@ -1,5 +1,4 @@
 from playwright.sync_api import expect
-import allure
 
 class AllProductsPage:
     def __init__(self, page):
@@ -15,7 +14,6 @@ class AllProductsPage:
 
 
     def search(self, name_of_item):
-        with
         self.search_product.fill(f'{name_of_item}')
         self.search_btn.click()
 
