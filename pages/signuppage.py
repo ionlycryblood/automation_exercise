@@ -6,7 +6,7 @@ class SignupPage:
         self.page = page
         self.title_text = page.get_by_text('Enter Account Information')
 
-        self.mr = page.locator('#id_gender1')
+        self.mr = page.locator('#id_gender1').first
         self.name = page.locator('[data-qa="name"]')
         self.email = page.locator('[data-qa="email"]')
         self.first_name = page.locator('[data-qa="first_name"]')
