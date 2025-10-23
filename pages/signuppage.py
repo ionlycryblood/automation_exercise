@@ -1,6 +1,11 @@
 from playwright.sync_api import expect
+import allure
 
 
+@allure.suite("Регистрация")
+@allure.feature("Заполнение информации об аккаунте")
+@allure.epic("Магазин Automation Exercise")
+@allure.tag("signup", "registration", "account", "ui")
 class SignupPage:
     def __init__(self, page):
         self.page = page
@@ -23,26 +28,78 @@ class SignupPage:
         self.mobile = page.locator('[data-qa="mobile_number"]')
         self.create_acc_btn = page.locator('[data-qa="create-account"]')
 
+    @allure.step("Регистрация нового пользователя")
+    @allure.severity(allure.severity_level.CRITICAL)
+    @allure.description("""
+    Полное заполнение формы регистрации пользователя:
+    - Выбор пола (Mr)
+    - Личная информация (имя, фамилия, пароль)
+    - Адресные данные
+    - Контактная информация
+    """)
     def register(self, password, first_name, last_name, address, state, city, zipcode, mobile):
-        self.mr.check()
-        self.password.fill(password)
-        self.first_name.fill(first_name)
-        self.last_name.fill(last_name)
-        self.address.scroll_into_view_if_needed() #без этого тест падает тк локаторы тупа не видны
-        self.address.fill(address)
-        self.country.select_option('India')
-        self.state.fill(state)
-        self.city.scroll_into_view_if_needed() # тоже самое
-        self.city.fill(city)
-        self.zipcode.fill(zipcode)
-        self.mobile.fill(mobile)
-        self.create_acc_btn.click()
+        with allure.step("Выбор пола 'Mr'"):
+            self.mr.check()
 
+        with allure.step("Ввод пароля"):
+            self.password.fill(password)
+
+        with allure.step(f"Ввод имени: {first_name}"):
+            self.first_name.fill(first_name)
+
+        with allure.step(f"Ввод фамилии: {last_name}"):
+            self.last_name.fill(last_name)
+
+        with allure.step("Прокрутка к полю адреса"):
+            self.address.scroll_into_view_if_needed()
+
+        with allure.step(f"Ввод адреса: {address}"):
+            self.address.fill(address)
+
+        with allure.step("Выбор страны: India"):
+            self.country.select_option('India')
+
+        with allure.step(f"Ввод штата: {state}"):
+            self.state.fill(state)
+
+        with allure.step("Прокрутка к полю города"):
+            self.city.scroll_into_view_if_needed()
+
+        with allure.step(f"Ввод города: {city}"):
+            self.city.fill(city)
+
+        with allure.step(f"Ввод почтового индекса: {zipcode}"):
+            self.zipcode.fill(zipcode)
+
+        with allure.step(f"Ввод номера телефона: {mobile}"):
+            self.mobile.fill(mobile)
+
+        with allure.step("Клик на кнопку 'Create Account'"):
+            self.create_acc_btn.click()
+
+    @allure.step("Удаление аккаунта")
+    @allure.severity(allure.severity_level.NORMAL)
     def delete_acc(self):
-        self.page.get_by_role('link', name='Delete Account').click()
-        self.page.locator('[data-qa="continue-button"]').click()
+        with allure.step("Клик на ссылку 'Delete Account'"):
+            self.page.get_by_role('link', name='Delete Account').click()
 
+        with allure.step("Клик на кнопку 'Continue'"):
+            self.page.locator('[data-qa="continue-button"]').click()
+
+    @allure.step("Проверка элементов страницы регистрации")
+    @allure.severity(allure.severity_level.NORMAL)
     def text_should_be_visible(self):
-        expect(self.title_text).to_be_visible()
-        expect(self.name).to_have_text()
-        expect(self.email).to_be_disabled()
+        with allure.step("Проверка заголовка 'Enter Account Information'"):
+            expect(self.title_text).to_be_visible()
+
+        with allure.step("Проверка поля имени"):
+            expect(self.name).to_have_text()
+
+        with allure.step("Проверка что поле email заблокировано"):
+            expect(self.email).to_be_disabled()
+
+        allure.attach(
+            "Страница регистрации загружена корректно, все необходимые элементы отображаются",
+            name="signup_page_loaded",
+            attachment_type=allure.attachment_type.TEXT
+        )
